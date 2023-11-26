@@ -21,9 +21,6 @@ function handleDeClickStart() {
     timeStart = setInterval(() => {
         document.body.style.background = getRandomHexColor();
     }, 1000);
-
-
-
 }
 
 
