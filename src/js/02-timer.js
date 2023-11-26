@@ -1,17 +1,37 @@
-// import flatpickr from "flatpickr";
+import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
+// import Notiflix from "notiflix";
 
-// import "flatpickr/dist/flatpickr.min.css";
+const inputEl = document.querySelector("#datetime-picker");
+const buttonEl = document.querySelector("button");
+const dayEl = document.querySelector("[data-days]");
+const hoursEl = document.querySelector("[data-hours]");
+const minutesEl = document.querySelector("[data-minutes]");
+const secondsEl = document.querySelector("[data-seconds]");
+
+console.log(buttonEl);
+console.log(hoursEl);
 
 
-// const options = {
-//     enableTime: true,
-//     time_24hr: true,
-//     defaultDate: new Date(),
-//     minuteIncrement: 1,
-//     onClose(selectedDates) {
-//         console.log(selectedDates[0]);
-//     },
-// };
+
+
+inputEl.addEventListener("input", flatpickr);
+// buttonEl.addEventListener("click", function1);
+
+
+const options = {
+    enableTime: true,
+    time_24hr: true,
+    defaultDate: new Date(),
+    minuteIncrement: 1,
+    onClose(selectedDates) {
+        console.log(selectedDates[0]);
+    },
+};
+
+flatpickr(inputEl, options);
+
+
 
 
 // function convertMs(ms) {
