@@ -1,21 +1,21 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
-// import Notiflix from "notiflix";
+// all modules
+import Notiflix from 'notiflix';
+
 
 const inputEl = document.querySelector("#datetime-picker");
-const buttonEl = document.querySelector("button");
+const buttonEl = document.querySelector('button[data-start]');
 const dayEl = document.querySelector("[data-days]");
 const hoursEl = document.querySelector("[data-hours]");
 const minutesEl = document.querySelector("[data-minutes]");
 const secondsEl = document.querySelector("[data-seconds]");
 
-console.log(buttonEl);
-console.log(hoursEl);
+const selectedDates = null;
+let currentDate = null;
+let intervalId = null;
 
-
-inputEl.addEventListener("input", flatpickr);
-// buttonEl.addEventListener("click", function1);
-
+buttonEl.addEventListener("click", onStartTime);
 buttonEl.disabled = true;
 
 
@@ -26,30 +26,93 @@ const options = {
     minuteIncrement: 1,
     onClose(selectedDates) {
         console.log(selectedDates[0]);
+        if (selectedDates[0].getTime() <= Date.now()) {
+            Notiflix.Notify.failure('Please choose a date in the future');
+        } else {
+            buttonEl.disabled = false;
+
+
+        }
     },
 };
 
 flatpickr(inputEl, options);
 
+function onStartTime() {
+    timer.start();
+}
+
+function addInterface(value) {
+    return String(value).padStart(2, '0');
+}
+
 function convertMs(ms) {
-    // Number of milliseconds per unit of time
+
     const second = 1000;
     const minute = second * 60;
     const hour = minute * 60;
     const day = hour * 24;
 
     // Remaining days
-    const days = Math.floor(ms / day);
+    const days = addInterface(Math.floor(ms / day));
     // Remaining hours
-    const hours = Math.floor((ms % day) / hour);
+    const hours = addInterface(Math.floor((ms % day) / hour));
     // Remaining minutes
-    const minutes = Math.floor(((ms % day) % hour) / minute);
+    const minutes = addInterface(Math.floor(((ms % day) % hour) / minute));
     // Remaining seconds
-    const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+    const seconds = addInterface(Math.floor((((ms % day) % hour) % minute) / second));
 
     return { days, hours, minutes, seconds };
 }
 
+
+
 console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
 console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
 console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+
+
+const timer = {
+    start() {
+        intervalId = setInterval(() => {
+            currentDate = Date.now();
+            const deltaTime = selectedDates - currentDate;
+            timerComponents(convertMs(deltaTime));
+            buttonEl.disabled = true;
+            inputEl.disabled = true;
+
+            if (deltaTime <= 1000) {
+                timer.stop();
+                Notiflix.Notify.success(`Congratulations!`);
+            }
+        }, 1000);
+    },
+
+    stop() {
+        clearInterval(intervalId);
+        buttonEl.disabled = false;
+        inputEl.disabled = false;
+    },
+};
+
+function timerComponents({ days, hours, minutes, seconds }) {
+    dayEl.textContent = days;
+    hoursEl.textContent = hours;
+    minutesEl.textContent = minutes;
+    secondsEl.textContent = seconds;
+}
+
+const divD = document.querySelector(".timer");
+const div = document.querySelectorAll(".field");
+
+
+divD.style.display = "flex";
+div.forEach(element => {
+    element.style.display = "flex";
+    element.style.flexDirection = "column";
+    element.style.gap = "15px";
+    element.style.fontSize = "large";
+    element.style.alignItems = "center";
+    element.style.paddingRight = "10px";
+
+});
