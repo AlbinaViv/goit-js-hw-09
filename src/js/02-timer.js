@@ -12,7 +12,6 @@ const minutesEl = document.querySelector("[data-minutes]");
 const secondsEl = document.querySelector("[data-seconds]");
 
 const selectedDates = null;
-let currentDate = null;
 let intervalId = null;
 
 buttonEl.addEventListener("click", onStartTime);
@@ -75,7 +74,7 @@ console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20
 const timer = {
     start() {
         intervalId = setInterval(() => {
-            currentDate = Date.now();
+            const currentDate = Date.now();
             const deltaTime = selectedDates - currentDate;
             timerComponents(convertMs(deltaTime));
             buttonEl.disabled = true;
@@ -94,6 +93,31 @@ const timer = {
         inputEl.disabled = false;
     },
 };
+
+// const timer = {
+//     start() {
+//         intervalId = setInterval(() => {
+//             const currentDate = Date.now();
+//             const deltaTime = currentDate - selectedDates;
+//             timerComponents(convertMs(deltaTime));
+//             buttonEl.disabled = true;
+//             inputEl.disabled = true;
+
+//             if (deltaTime <= 1000) {
+//                 timer.stop();
+//                 Notiflix.Notify.success(`Congratulations!`);
+//             }
+//         }, 1000);
+//     },
+
+//     stop() {
+//         clearInterval(intervalId);
+//         buttonEl.disabled = false;
+//         inputEl.disabled = false;
+//     },
+// };
+
+
 
 function timerComponents({ days, hours, minutes, seconds }) {
     dayEl.textContent = days;
