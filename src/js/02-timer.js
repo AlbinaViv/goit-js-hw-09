@@ -11,7 +11,7 @@ const hoursEl = document.querySelector("[data-hours]");
 const minutesEl = document.querySelector("[data-minutes]");
 const secondsEl = document.querySelector("[data-seconds]");
 
-const selectedDates = null;
+let selectedDate = null;
 let intervalId = null;
 
 buttonEl.addEventListener("click", onStartTime);
@@ -28,6 +28,7 @@ const options = {
         if (selectedDates[0].getTime() <= Date.now()) {
             Notiflix.Notify.failure('Please choose a date in the future');
         } else {
+            selectedDate = selectedDates[0].getTime();
             buttonEl.disabled = false;
 
 
@@ -74,15 +75,15 @@ console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20
 const timer = {
     start() {
         intervalId = setInterval(() => {
-            const currentDate = Date.now();
-            const deltaTime = selectedDates - currentDate;
+            currentDate = Date.now();
+            const deltaTime = selectedDate - currentDate;
             timerComponents(convertMs(deltaTime));
             buttonEl.disabled = true;
             inputEl.disabled = true;
 
             if (deltaTime <= 1000) {
                 timer.stop();
-                Notiflix.Notify.success(`Congratulations!`);
+                Notiflix.Notify.success(`Congratulations! The timer has stopped!`);
             }
         }, 1000);
     },
@@ -98,15 +99,17 @@ const timer = {
 //     start() {
 //         intervalId = setInterval(() => {
 //             const currentDate = Date.now();
-//             const deltaTime = currentDate - selectedDates;
+//             const deltaTime = selectedDates - currentDate;
 //             timerComponents(convertMs(deltaTime));
 //             buttonEl.disabled = true;
 //             inputEl.disabled = true;
 
 //             if (deltaTime <= 1000) {
 //                 timer.stop();
-//                 Notiflix.Notify.success(`Congratulations!`);
+//                 Notiflix.Notify.success('Congratulations!');
 //             }
+//             console.log(selectedDates);
+
 //         }, 1000);
 //     },
 
