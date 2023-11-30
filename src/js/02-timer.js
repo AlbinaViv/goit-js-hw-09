@@ -67,9 +67,9 @@ function convertMs(ms) {
 
 
 
-console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
+// console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
+// console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
+// console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20}
 
 
 const timer = {
@@ -94,32 +94,6 @@ const timer = {
         inputEl.disabled = false;
     },
 };
-
-// const timer = {
-//     start() {
-//         intervalId = setInterval(() => {
-//             const currentDate = Date.now();
-//             const deltaTime = selectedDates - currentDate;
-//             timerComponents(convertMs(deltaTime));
-//             buttonEl.disabled = true;
-//             inputEl.disabled = true;
-
-//             if (deltaTime <= 1000) {
-//                 timer.stop();
-//                 Notiflix.Notify.success('Congratulations!');
-//             }
-//             console.log(selectedDates);
-
-//         }, 1000);
-//     },
-
-//     stop() {
-//         clearInterval(intervalId);
-//         buttonEl.disabled = false;
-//         inputEl.disabled = false;
-//     },
-// };
-
 
 
 function timerComponents({ days, hours, minutes, seconds }) {
