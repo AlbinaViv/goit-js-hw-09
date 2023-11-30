@@ -2,6 +2,7 @@ const butStart = document.querySelector("[data-start]");
 const butStop = document.querySelector("[data-stop]");
 const body = document.querySelector('body');
 
+let timeStart = null;
 
 butStart.addEventListener("click", handleDeClickStart);
 
