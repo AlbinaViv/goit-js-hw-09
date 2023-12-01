@@ -67,7 +67,7 @@ function convertMs(ms) {
 const timer = {
     start() {
         intervalId = setInterval(() => {
-            currentDate = Date.now();
+            const currentDate = Date.now();
             const deltaTime = selectedDate - currentDate;
             timerComponents(convertMs(deltaTime));
             buttonEl.disabled = true;
